@@ -1,0 +1,33 @@
+{
+  "name": "client-perry-vadiem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/server.ts",
+    "test": "ts-node ./node_modules/.bin/tape './src/**/*.spec.ts' | ./node_modules/.bin/tap-spec",
+    "test:auto": "nodemon --watch modules --exec ./node_modules/.bin/ts-node -- ./node_modules/.bin/tape './src/**/*.spec.ts' | ./node_modules/.bin/tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IDH14/client-perry-vadiem.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IDH14/client-perry-vadiem/issues"
+  },
+  "homepage": "https://github.com/IDH14/client-perry-vadiem#readme",
+  "dependencies": {
+    "yargs": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.51",
+    "@types/yargs": "^6.3.2",
+    "nodemon": "^1.11.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3",
+    "ts-node": "^1.7.0",
+    "typescript": "^2.0.10"
+  }
+}
