@@ -8,8 +8,8 @@ const dir = __dirname;
 const host = argv.host || 'localhost';
 const port = argv.port || 50202;
 
-//fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTEudHh0'), 'Hello Node.js', 'utf8');
-//fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTIudHh0'), 'Goodbye Node.js', 'utf8');
+fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTEudHh0'), 'Hello Node.js', 'utf8');
+fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTIudHh0'), 'Goodbye Node.js', 'utf8');
 
 /**
  * Create connection and write to server
