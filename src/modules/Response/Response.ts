@@ -13,7 +13,6 @@ abstract class Response {
     }
 
     toString() {
-
         return 'RESPONSE idh14sync/1.0' + os.EOL + os.EOL + JSON.stringify(this.object, null, 2)
     }
 }
