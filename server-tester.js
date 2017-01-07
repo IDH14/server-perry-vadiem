@@ -14,7 +14,7 @@ const port = argv.port || 50202;
 /**
  * Create connection and write to server
  */
-const client = net.createConnection({ host: host, port: port }, () => {
+const client = net.createConnection({ host: host, port: port }, (socket) => {
 
   const method = argv.method || '';
   const filename = argv.file || 'ZmlsZTEudHh0';

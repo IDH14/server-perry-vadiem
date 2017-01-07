@@ -10,9 +10,14 @@ const mockRequest = {
 };
 
 test('Request.parseRequest() - LIST', (assert) => {
+
+	// arrange
 	const request: Request = new Request();
+
+	// act
 	request.parseRequest(mockRequest.LIST);
 
+	// assert
 	assert.equal(request.method, 'LIST', 'Method is LIST');
 	assert.equal(request.version, 'idh14sync/1.0', 'Version is idh14sync/1.0');
 	assert.deepEqual(request.body, {}, 'Body is an empty object');

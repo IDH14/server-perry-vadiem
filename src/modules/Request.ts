@@ -7,23 +7,34 @@ export default class Request {
 	body: JSON;
 
 	constructor() {}
-	
+
 	parseRequest(data: string) {
 
 		const lines = this.splitOnEol(data);
-		
-		const meta = this.splitOnSpace(lines[0]);
-		this.method = meta[0];
-		this.version = meta[1];
 
-		this.body = this.parseJson(lines[1] || '{}');
+		const meta = lines.shift();
+		const metaParts = this.splitOnSpace(meta);
+		this.method = metaParts[0];
+		this.version = metaParts[1];
+
+		const joinedLines = lines.join('');
+
+		this.body = this.parseJson(joinedLines || '{}');
 	}
 
-	private splitOnEol(string: string) {
+	/**
+	 * Split a given string on EOL characters
+	 * Returns an array with strings
+	 */
+	private splitOnEol(string: string): string[] {
 		return string.split(os.EOL);
 	}
 
-	private splitOnSpace(string: string) {
+	/**
+	 * Splits a given string on space characters
+	 * Returns an array with strings
+	 */
+	private splitOnSpace(string: string): string[] {
 		return string.split(' ');
 	}
 
