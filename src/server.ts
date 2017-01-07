@@ -5,7 +5,6 @@ import os = require('os')
 import yargs = require('yargs')
 
 import { config } from './config';
-import { log } from './modules/logger';
 import Request from './modules/request';
 import ResponseFactory from './modules/Response/ResponseFactory';
 import ResponseInterface from './modules/Response/ResponseInterface';
