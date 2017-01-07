@@ -1,4 +1,7 @@
 import os = require('os');
+import { splitOnEol, splitOnSpace } from './Helpers';
+
+const log = console.log;
 
 export default class Request {
 
@@ -10,10 +13,12 @@ export default class Request {
 
 	parseRequest(data: string) {
 
-		const lines = this.splitOnEol(data);
+		const lines = splitOnEol(data);
 
 		const meta = lines.shift();
-		const metaParts = this.splitOnSpace(meta);
+
+		const metaParts = splitOnSpace(meta);
+
 		this.method = metaParts[0];
 		this.version = metaParts[1];
 
@@ -23,21 +28,8 @@ export default class Request {
 	}
 
 	/**
-	 * Split a given string on EOL characters
-	 * Returns an array with strings
+	 * Transform given string to JSON
 	 */
-	private splitOnEol(string: string): string[] {
-		return string.split(os.EOL);
-	}
-
-	/**
-	 * Splits a given string on space characters
-	 * Returns an array with strings
-	 */
-	private splitOnSpace(string: string): string[] {
-		return string.split(' ');
-	}
-
 	private parseJson(data: string) {
 		return JSON.parse(data);
 	}

@@ -1,83 +1,52 @@
-var assert = require('assert');
-const os = require('os');
+import assert = require('assert');
+import os = require('os');
+
 import Request from '../../src/modules/Request';
-
-const mockRequests = {
-	LIST:  `LIST idh14sync/1.0`,
-	GET: `GET idh14sync/1.0${os.EOL}{ "filename": "file1.txt" }`,
-	GET2: `GET idh14sync/1.0${os.EOL}{${os.EOL}"filename": "file1.txt"${os.EOL}}`,
-	PUT: `PUT idh14sync/1.0${os.EOL}{ "filename": "file1.txt", "checksum": "8578201cf22b83bdaef44e1c5a5dc2e764218aa8", "original_checksum": "", "content": "" }`,
-	DELETE: `DELETE idh14sync/1.0${os.EOL}{ "filename": "file1.txt" }`,
-
-
-};
 
 describe('Request', () => {
   describe('parseRequest()', () => {
 
-    it('should parse a LIST request', () => {
+    it('should parse a simple request', () => {
       // arrange
+      const mockRequest = `~METHOD~ ~VERSION~`
       const request: Request = new Request();
 
       // act
-      request.parseRequest(mockRequests.LIST);
+      request.parseRequest(mockRequest);
 
       // assert
-      assert.equal(request.method, 'LIST');
-      assert.equal(request.version, 'idh14sync/1.0');
+      assert.equal(request.method, '~METHOD~');
+      assert.equal(request.version, '~VERSION~');
       assert.deepEqual(request.body, {});
     });
 
-    it('should parse a GET request', () => {
+    it('should parse a request with a single-line JSON body', () => {
       // arrange
+      const mockRequest = `~METHOD~ ~VERSION~${os.EOL}{ "filename": "file1.txt" }`
       const request: Request = new Request();
 
       // act
-      request.parseRequest(mockRequests.GET);
+      request.parseRequest(mockRequest);
 
       // assert
-      assert.equal(request.method, 'GET');
-      assert.equal(request.version, 'idh14sync/1.0');
+      assert.equal(request.method, '~METHOD~');
+      assert.equal(request.version, '~VERSION~');
       assert.deepEqual(request.body, { "filename": "file1.txt" });
     });
 
-    it('should parse a GET request with newlines in JSON', () => {
+    it('should parse a request with a multi-line JSON body', () => {
       // arrange
+      const mockRequest = `~METHOD~ ~VERSION~${os.EOL}{${os.EOL}"filename": "file1.txt"${os.EOL}}`
       const request: Request = new Request();
 
       // act
-      request.parseRequest(mockRequests.GET2);
+      request.parseRequest(mockRequest);
 
       // assert
-      assert.equal(request.method, 'GET');
-      assert.equal(request.version, 'idh14sync/1.0');
+      assert.equal(request.method, '~METHOD~');
+      assert.equal(request.version, '~VERSION~');
       assert.deepEqual(request.body, { "filename": "file1.txt" });
     });
 
-    it('should parse a PUT request', () => {
-      // arrange
-      const request: Request = new Request();
-
-      // act
-      request.parseRequest(mockRequests.PUT);
-
-      // assert
-      assert.equal(request.method, 'PUT');
-	    assert.equal(request.version, 'idh14sync/1.0');
-	    assert.deepEqual(request.body, { "filename": "file1.txt", "checksum": "8578201cf22b83bdaef44e1c5a5dc2e764218aa8", "original_checksum": "", "content": "" });
-    });
-
-    it('should parse a DELETE request', () => {
-      // arrange
-      const request: Request = new Request();
-
-      // act
-      request.parseRequest(mockRequests.DELETE);
-
-      // assert
-      assert.equal(request.method, 'DELETE');
-      assert.equal(request.version, 'idh14sync/1.0');
-      assert.deepEqual(request.body, { "filename": "file1.txt" });
-    });
   });
 });
