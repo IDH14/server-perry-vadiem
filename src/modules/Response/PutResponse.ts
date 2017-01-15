@@ -1,7 +1,7 @@
 import path = require('path');
 import fs = require('fs');
 
-import { checksum } from './../Helpers';
+import { checksum, fromBase64 } from './../Helpers';
 import { config } from './../../config';
 
 import Response from './Response';
@@ -12,32 +12,56 @@ export default class PutResponse extends Response implements ResponseInterface {
 
     create() {
 
+        const filename = this.request.body['filename'];
+        const content = this.request.body['content'];
+        const originalChecksum = this.request.body['original_checksum'];
+
+
         /** CREATE FILE IF NOT EXISTS */
-        if(!this.fileExists(this.request.body['filename'])) {
-            this.saveFile(this.request.body['filename'], this.request.body['content']);
+        if(!this.fileExists(filename)) {
+
+            this.saveFile(filename, fromBase64(content));
 
             this.object = {
                 status: 200,
-                message: 'File added'
+                message: 'File created'
             }
 
             return;
         }
 
-        /** CREATE FILE IF NOT EXISTS */
+        /** GET EXISTING FILE */
+        const existingFile = this.getFile(filename);
+        const existinFileSha1 = checksum(existingFile);
+        console.log(existinFileSha1);
 
-        this.object = { status: 'yes' };
+        if(existinFileSha1 !== originalChecksum) {
+            this.object = {
+                status: 412,
+                message: 'Checksums do not match'
+            }
+            return;
+        }
+
+        /** OVERWRITE OLD FILE */
+        this.saveFile(filename, fromBase64(content));
+
+        this.object = {
+            status: 200,
+            message: 'File updated'
+        };
 
         return;
-
-        // this.object = {
-        //     status: '404',
-        //     message: 'Method not supported, see protocol: https://idh14.github.io/protocol/'
-        // };
     }
 
     fileExists(fileName): boolean {
         return fs.existsSync(this.getFilePath(fileName));
+    }
+
+    getFile(fileName) {
+        const filePath = this.getFilePath(fileName);
+
+        return fs.readFileSync(filePath, { encoding: 'utf8' });
     }
 
     saveFile(fileName, contents) {

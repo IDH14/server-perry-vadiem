@@ -8,8 +8,8 @@ const dir = __dirname;
 const host = argv.host || 'localhost';
 const port = argv.port || 50202;
 
-fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTEudHh0'), 'Hello Node.js', 'utf8');
-fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTIudHh0'), 'Goodbye Node.js', 'utf8');
+// fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTEudHh0'), 'Hello Node.js', 'utf8');
+// fs.writeFileSync(path.join(dir, '/server-files/ZmlsZTIudHh0'), 'Goodbye Node.js', 'utf8');
 
 /**
  * Create connection and write to server
@@ -31,7 +31,7 @@ const client = net.createConnection({ host: host, port: port }, (socket) => {
       break;
 
     case 'PUT':
-      const put = `PUT idh14sync/1.0${os.EOL}{"filename": "${filename}", "checksum": "159cb8ab470d9f2d2b45a04f446da51c97190b25", "original_checksum": "cd0eaaf877ff870cfc17890248c7adfe2483f3a0", "content": "R29vZGJ5ZSBOb2RlLmpz" }`;
+      const put = `PUT idh14sync/1.0${os.EOL}{"filename": "${filename}", "checksum": "5ea81b966fb24d957ef5c45545a4e95d466c7e93", "original_checksum": "159cb8ab470d9f2d2b45a04f446da51c97190b25", "content": "aGFsbG8gbWFpa2E=" }`;
       client.write(put);
       break;
 
