@@ -1,7 +1,7 @@
 import path = require('path');
 import fs = require('fs');
 
-import { checksum } from './../Helpers';
+import { toBase64, checksum } from './../Helpers';
 import { config } from './../../config';
 
 import Response from './Response';
@@ -21,12 +21,10 @@ export default class ListReponse extends Response implements ResponseInterface {
             files.forEach(function (fileName) {
                 const filePath = path.join(config.filesDir, fileName);
                 const file = fs.readFileSync(filePath, 'utf-8');
-                const stats = fs.statSync(filePath);
 
                 response.files.push({
-                    filename: fileName,
+                    filename: toBase64(fileName),
                     checksum: checksum(file),
-                    last_modified: stats.mtime
                 });
 
             }, this);
