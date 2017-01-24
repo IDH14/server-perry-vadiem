@@ -30,6 +30,7 @@ var server = net.createServer((socket) => {
 
     response.create();
 
+    console.log(`---- RESPONSE BEGIN ----${os.EOL}${response.toString()}${os.EOL}--RESPONSE END`);
     socket.write(response.toString());
   });
 
