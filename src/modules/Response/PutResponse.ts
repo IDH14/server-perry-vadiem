@@ -33,7 +33,6 @@ export default class PutResponse extends Response implements ResponseInterface {
         /** GET EXISTING FILE */
         const existingFile = this.getFile(filename);
         const existinFileSha1 = checksum(existingFile);
-        console.log(existinFileSha1);
 
         if(existinFileSha1 !== originalChecksum) {
             this.object = {
