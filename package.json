@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/server.ts",
+    "start": "./node_modules/.bin/ts-node ./src/server.ts",
+    "start:auto": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/server.ts",
     "test": "mocha --recursive --compilers ts:ts-node/register --bail",
     "cover": "nyc npm t"
   },
