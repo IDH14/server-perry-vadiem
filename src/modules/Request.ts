@@ -13,6 +13,8 @@ export default class Request {
 
 	parseRequest(data: string) {
 
+		console.log(data);
+
 		const lines = splitOnEol(data);
 
 		const meta = lines.shift();

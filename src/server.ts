@@ -5,7 +5,7 @@ import os = require('os')
 import yargs = require('yargs')
 
 import { config } from './config';
-import Request from './modules/request';
+import Request from './modules/Request';
 import ResponseFactory from './modules/Response/ResponseFactory';
 import ResponseInterface from './modules/Response/ResponseInterface';
 
@@ -22,6 +22,7 @@ var server = net.createServer((socket) => {
 
   // when receiveing data from the socket
   socket.on('data', (input: string) => {
+    console.log ('data log')
 
     var request: Request = new Request();
     request.parseRequest(input);
@@ -35,7 +36,10 @@ var server = net.createServer((socket) => {
 
   // runs after data has been transmitted
   socket.on('end', () => {
-
+    console.log('we zijn klaar');
+  });
+  socket.on('error', (err: Error) => {
+    console.log(err);
   });
 });
 
