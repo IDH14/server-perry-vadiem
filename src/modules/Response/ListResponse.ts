@@ -23,7 +23,7 @@ export default class ListReponse extends Response implements ResponseInterface {
                 const file = fs.readFileSync(filePath, 'utf-8');
 
                 response.files.push({
-                    filename: toBase64(fileName),
+                    filename: fileName,
                     checksum: checksum(file),
                 });
 

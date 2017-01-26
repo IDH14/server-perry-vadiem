@@ -13,7 +13,7 @@ export default class Request {
 
 	parseRequest(data: string) {
 
-		console.log(data);
+		console.log(`---- REQUEST BEGIN ----${os.EOL}${data}${os.EOL}--REQUEST END`);
 
 		const lines = splitOnEol(data);
 
